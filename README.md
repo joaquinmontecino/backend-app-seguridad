@@ -1,16 +1,16 @@
-<h1 align="center"> Frontend App: Protección Ciudadana</h1>
+<h1 align="center"> Backend App: Protección Ciudadana</h1>
 
-## Descripción
+# Descripción
 Protección Ciudadana será una aplicación móvil diseñada para mejorar la seguridad ciudadana a través de la participación comunitaria y la tecnología. La aplicación permitirá a los usuarios reportar y visualizar incidentes de seguridad y accidentes en tiempo real, creando un mapa interactivo que mostrará la distribución de estos eventos en la ciudad. Con esta herramienta, los ciudadanos podrán mantenerse informados sobre la seguridad en sus áreas de interés, mientras que las autoridades podrán utilizar los datos para optimizar sus estrategias de prevención y respuesta.
 
 
-## Objetivos
+# Objetivos
 
-# Objetivo General
+## Objetivo General
 
 Desarrollar y lanzar una aplicación móvil que fomente la colaboración ciudadana en temas de seguridad, proporcionando una plataforma para reportar y visualizar incidentes, con el fin de mejorar la conciencia pública sobre la seguridad y apoyar la toma de decisiones de las autoridades competentes.
 
-# Objetivos Específicos
+## Objetivos Específicos
 
 ● Diseñar e implementar un sistema de reporte de incidentes fácil de usar, que permita a los usuarios marcar ubicaciones y proporcionar detalles sobre delitos y accidentes.
 
