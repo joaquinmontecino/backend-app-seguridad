@@ -1,5 +1,5 @@
 require('dotenv').config();
-const webServer = require('./config/web-server');
+const webServer = require('./config/server');
 const defaultThreadPoolSize = 4;
 const database = require('./config/database.js');
 
