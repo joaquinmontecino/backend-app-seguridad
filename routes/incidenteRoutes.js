@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.get('/', IncidenteController.getAll);
 router.get('/incidente/:id', IncidenteController.getAllIncidentes);
+router.get('/usuario/:id', IncidenteController.getAllIncidentes);
 router.get('/:id', IncidenteController.getById);
 router.get('/filtro/filter', IncidenteController.getByTipo);
 router.post('/', IncidenteController.create);

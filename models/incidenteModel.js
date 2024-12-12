@@ -33,6 +33,17 @@ class IncidenteModel {
     return result[0];
   }
 
+  static async getIncidenteByIdUsuario(id) {
+    const query = `
+      SELECT i.*, u.latitude, u.longitude
+      FROM Incidente i
+      JOIN Ubicacion_Incidente u ON i.id_incidente = u.id_incidente
+      WHERE i.id_usuario = $1
+    `;
+    const result = await simpleExecute(query, [id]);
+    return result[0];
+  }
+
   static async privateGetIncidenteById(id) {
     const query = `
       SELECT * FROM Incidente
