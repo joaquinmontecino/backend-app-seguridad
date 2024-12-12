@@ -40,6 +40,21 @@ class IncidenteController {
     }
   }
 
+  static async getByTipo(req, res) {
+    const { tipo } = req.query;
+    try {
+      const incidentes = await IncidenteModel.getIncidentesByTipo(tipo);
+      if (incidentes.length === 0) {
+        return res.status(404).json({ error: 'No se encontraron incidentes de este tipo' });
+      }
+      res.status(200).json(incidentes);
+    } catch (err) {
+      console.error('Error al filtrar incidentes por tipo:', err);
+      res.status(500).json({ error: 'Error al filtrar incidentes' });
+    }
+  }
+
+
   static async create(req, res) {
     try {
       IncidenteDTO.validate(req.body);

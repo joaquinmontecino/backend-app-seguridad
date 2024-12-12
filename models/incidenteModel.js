@@ -42,6 +42,18 @@ class IncidenteModel {
     return result[0];
   }
 
+  static async getIncidentesByTipo(tipo) {
+    const query = `
+      SELECT i.*, u.latitude, u.longitude
+      FROM Incidente i
+      JOIN Ubicacion_Incidente u ON i.id_incidente = u.id_incidente
+      WHERE LOWER(i.tipo) = LOWER($1)
+    `;
+    const result = await simpleExecute(query, [tipo]);
+    return result;
+  }
+  
+
   static async createIncidente(incidenteData) {
     const { id_usuario, tipo, hora, fecha, descripcion, latitude, longitude } = incidenteData;
     const queryIncidente = `
