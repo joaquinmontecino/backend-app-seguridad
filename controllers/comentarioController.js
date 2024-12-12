@@ -1,10 +1,12 @@
 const ComentarioModel = require('../models/comentarioModel');
+const ComentarioDTO = require('../dto/comentarioDTO');
 
 class ComentarioController {
 
   static async getAllFromIncidente(req, res) {
     try {
-      const comentarios = await ComentarioModel.getAllComentariosIncidente();
+      const { id } = req.params;
+      const comentarios = await ComentarioModel.getAllComentariosIncidente(id);
       res.status(200).json(comentarios);
     } catch (err) {
       console.error('Error al obtener comentarios: ', err);
@@ -28,7 +30,9 @@ class ComentarioController {
 
   static async post(req, res) {
     try {
-      const nuevoComentario = await ComentarioModel.createComentario(req.body);
+      ComentarioDTO.validate(req.body);
+      const comentarioData = new ComentarioDTO(req.body);
+      const nuevoComentario = await ComentarioModel.createComentario(comentarioData);
       res.status(201).json(nuevoComentario);
     } catch (err) {
       console.error('Error al crear el comentario:', err.message);
@@ -39,7 +43,7 @@ class ComentarioController {
   static async edit(req, res) {
     const { id } = req.params;
     try {
-      const comentarioActual = await ComentarioModel.getComentarioById(id);
+      const comentarioActual = await ComentarioModel.privateGetComentario(id);
       if (!comentarioActual) {
         return res.status(404).json({ error: 'Comentario no encontrada' });
       }
@@ -48,6 +52,8 @@ class ComentarioController {
         ...comentarioActual,
         ...req.body
       };
+
+      ComentarioDTO.validatePartial(comentarioData);
 
       const comentarioActualizado = await ComentarioModel.updateComentario(id, comentarioData);
       res.status(200).json(comentarioActualizado);

@@ -6,23 +6,32 @@ class ComentarioModel{
     const query = `
       SELECT c.*, u.nombre AS usuario_nombre
       FROM Comentario c
-      JOIN Usuario u ON c.id_usuario = u.id
+      JOIN Usuario u ON c.id_usuario = u.id_usuario
       WHERE c.id_incidente = $1
     `;
     const result = await simpleExecute(query, [id_incidente]);
 
-    return result.rows;
+    return result;
   }
 
   static async getComentarioById(id_comentario){
     const query = `
       SELECT c.*, u.nombre AS usuario_nombre
       FROM Comentario c
-      JOIN Usuario u ON c.id_usuario = u.id
+      JOIN Usuario u ON c.id_usuario = u.id_usuario
       WHERE c.id_comentario = $1
     `;
     const result = await simpleExecute(query, [id_comentario]);
-    return result.rows[0];
+    return result[0];
+  }
+
+  static async privateGetComentario(id_comentario){
+    const query = `
+      SELECT id_incidente, id_usuario, comentario FROM Comentario
+      WHERE id_comentario = $1
+    `;
+    const result = await simpleExecute(query, [id_comentario]);
+    return result[0];
   }
 
   static async createComentario(comentarioData){
@@ -33,7 +42,7 @@ class ComentarioModel{
     `;
     const binds = [id_incidente, id_usuario, comentario];
     const result = await simpleExecute(query, binds);
-    return result.rows[0];
+    return result[0];
   }
 
   static async updateComentario(id_comentario, comentarioData){
@@ -45,7 +54,7 @@ class ComentarioModel{
     `;
     const binds = [comentario, id_comentario];
     const result = await simpleExecute(query, binds);
-    return result.rows[0];
+    return result[0];
   }
 
   static async deleteComentario(id_comentario){

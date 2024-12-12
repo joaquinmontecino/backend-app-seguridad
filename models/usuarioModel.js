@@ -16,6 +16,12 @@ class UsuarioModel{
     return result[0];
   }
 
+  static async privateGetUsuarioById(id){
+    const query = `SELECT * FROM Usuario WHERE id_usuario = $1`;
+    const result = await simpleExecute(query, [id]);
+    return result[0];
+  }
+
   static async registerUsuario(usuarioData){
     const { nombre, correo, password } = usuarioData;
 
@@ -47,7 +53,9 @@ class UsuarioModel{
       { expiresIn: '3h' }
     );
 
-    return { token };
+    const id_usuario = usuario.id_usuario;
+
+    return { id_usuario, token };
   }
 
   static async updateUsuario(id, usuarioData){

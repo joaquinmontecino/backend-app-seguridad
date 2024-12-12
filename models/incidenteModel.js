@@ -9,7 +9,7 @@ class IncidenteModel {
       JOIN Ubicacion_Incidente u ON i.id_incidente = u.id_incidente
     `;
     const result = await simpleExecute(query);
-    return result.rows;
+    return result;
   }
 
   static async getAll(){
@@ -19,7 +19,7 @@ class IncidenteModel {
       JOIN Ubicacion_Incidente u ON i.id_incidente = u.id_incidente
     `;
     const result = await simpleExecute(query);
-    return result.rows;
+    return result;
   }
 
   static async getIncidenteById(id) {
@@ -30,7 +30,16 @@ class IncidenteModel {
       WHERE i.id_incidente = $1
     `;
     const result = await simpleExecute(query, [id]);
-    return result.rows[0];
+    return result[0];
+  }
+
+  static async privateGetIncidenteById(id) {
+    const query = `
+      SELECT * FROM Incidente
+      WHERE id_incidente = $1
+    `;
+    const result = await simpleExecute(query, [id]);
+    return result[0];
   }
 
   static async createIncidente(incidenteData) {
@@ -42,7 +51,7 @@ class IncidenteModel {
     const bindsIncidente = [id_usuario, tipo, hora, fecha, descripcion];
     const incidenteResult = await simpleExecute(queryIncidente, bindsIncidente);
 
-    const id_incidente = incidenteResult.rows[0].id_incidente;
+    const id_incidente = incidenteResult[0].id_incidente;
 
     const queryUbicacion = `
       INSERT INTO UBICACION_INCIDENTE (id_incidente, latitude, longitude)
@@ -52,8 +61,8 @@ class IncidenteModel {
     const ubicacionResult = await simpleExecute(queryUbicacion, bindsUbicacion);
 
     return {
-      incidente: incidenteResult.rows[0],
-      ubicacion: ubicacionResult.rows[0]
+      incidente: incidenteResult[0],
+      ubicacion: ubicacionResult[0]
     };
 
   }
@@ -72,10 +81,7 @@ class IncidenteModel {
 
   static async deleteIncidente(id) {
 
-    const queryUbicacion = 'DELETE FROM Ubicacion WHERE id_incidente = $1';
-    await simpleExecute(queryUbicacion, [id]);
-
-    const queryIncidente = 'DELETE FROM Incidente WHERE id_incidente = $1';
+    const queryIncidente = 'DELETE FROM INCIDENTE WHERE id_incidente = $1';
     await simpleExecute(queryIncidente, [id]);
     return { message: 'Incidente eliminado correctamente' };
   }

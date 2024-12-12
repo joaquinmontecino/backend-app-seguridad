@@ -6,7 +6,7 @@ class IncidenteController {
 
   static async getAll(req, res) {
     try {
-      const incidentes = await IncidenteModel.getBasicIncidentes();
+      const incidentes = await IncidenteModel.getAllIncidentes();
       res.status(200).json(incidentes);
     } catch (err) {
       console.error('Error al obtener los incidentes básicos: ', err);
@@ -56,7 +56,7 @@ class IncidenteController {
   static async edit(req, res) {
     const { id } = req.params;
     try {
-      const incidenteActual = await IncidenteModel.getIncidenteById(id);
+      const incidenteActual = await IncidenteModel.privateGetIncidenteById(id);
       if (!incidenteActual) {
         return res.status(404).json({ error: 'Incidente no encontrada' });
       }

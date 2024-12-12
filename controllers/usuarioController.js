@@ -43,9 +43,9 @@ class UsuarioController {
 
   static async login(req, res){
     try {
-      const { correo, contrasena} = req.body;
-      const { token, rol} = await UsuarioModel.loginUsuario({ correo, contrasena});
-      res.status(200).json({ token, rol});
+      const { correo, password} = req.body;
+      const { id_usuario, token} = await UsuarioModel.loginUsuario({ correo, password});
+      res.status(200).json({ id_usuario, token});
     }
     catch (err){
       res.status(401).json({ error: err.message });
@@ -55,7 +55,7 @@ class UsuarioController {
   static async update(req, res){
     const { id } = req.params;
     try {
-      const UsuarioActual = await UsuarioModel.getUsuarioById(id);
+      const UsuarioActual = await UsuarioModel.privateGetUsuarioById(id);
       if(!UsuarioActual){
         return res.status(404).json({ error: 'Usuario no encontrado' });
       }
