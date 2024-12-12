@@ -54,8 +54,8 @@ class UsuarioModel{
     );
 
     const id_usuario = usuario.id_usuario;
-
-    return { id_usuario, token };
+    const nombre = usuario.nombre;
+    return { id_usuario, nombre, token };
   }
 
   static async updateUsuario(id, usuarioData){
