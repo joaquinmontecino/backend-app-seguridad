@@ -24,13 +24,13 @@ function initialize() {
     app.use('/comentarios', comentarioRoutes);
     app.use('/usuarios', usuarioRoutes);
 
-    httpServer.listen(port, err => {
+    httpServer.listen(port, '0.0.0.0', (err) => {
       if (err) {
         reject(err);
         return;
       }
 
-      console.log(`Servidor web escuchando en localhost:${port}`);
+      console.log(`Servidor web escuchando en 0.0.0.0:${port}`);
 
       resolve();
     });
